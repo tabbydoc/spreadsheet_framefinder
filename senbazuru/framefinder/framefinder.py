@@ -28,17 +28,17 @@ class PredictSheetRows:
             if elt.find('xls') < 0:
                 continue
             try:
-                print 'Processing', elt
+                print ('Processing', elt)
                 self.generate_from_sheetfile(elt)
                 count += 1
                 if count % 100 == 0:
-                    print 'CURRENT:', count
+                    print ('CURRENT:', count)
             except:
-                print 'Error processing', elt
+                print ('Error processing', elt)
                 raise
 
     def generate_from_sheetfile(self, filename):
-        print 'Generating features for each row in', filename
+        print ('Generating features for each row in', filename)
         
         filepath = _sheetdir+'/'+filename
 
@@ -71,17 +71,17 @@ class RunCRFppCommands:
 
 #     obtain model parameters through training
     def train(self):
-        print 'Training CRF++ model... '
+        print ('Training CRF++ model... ')
         cmd = self.crftrainscript+' -c 4.0 "'+_crfpptemplatepath+'" "' + _crftraindatapath + '" "'+self.crfmodelpath+'"'
         os.system(cmd)
-        print 'Done training CRF++ model... '
+        print ('Done training CRF++ model... ')
         
 #    predict each spreadsheet files in the directory
     def predict(self):
         for elt in os.listdir(_crffeadir):
             #elt = elt.replace(' ', '\\ ')
             
-            print 'CRF++ predicting sheet row labels for:', elt
+            print ('CRF++ predicting sheet row labels for:', elt)
             
             featurepath = _crffeadir + '/'+elt
             predictpath = _crfpredictdir + '/'+elt
@@ -89,14 +89,14 @@ class RunCRFppCommands:
                 cmd = self.crftestscript+' -m "' +self.crfmodelpath+'" "'+ featurepath+'" > "'+predictpath+'"'
                 os.system(cmd)
             except:
-                print 'ERROR predicting:', elt
+                print ('ERROR predicting:', elt)
 #                 raise
             
 # generate the final output
 class TransformOutput:
     def run(self):
         for elt in os.listdir(_crfpredictdir):
-            print 'Generating final output for', elt
+            print ('Generating final output for', elt)
             
             predictpath = _crfpredictdir + '/' + elt
             outpath = _outputdir + '/' + elt
@@ -118,11 +118,10 @@ class TransformOutput:
             fout.close()
             fin.close()
             
-            print 'Successfully obtain prediction results for', elt
+            print ('Successfully obtain prediction results for', elt)
 
             
 if __name__ == '__main__':
-    
     
     predict = PredictSheetRows()
     predict.generate_from_sheetdir()

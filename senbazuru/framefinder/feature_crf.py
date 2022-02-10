@@ -21,14 +21,15 @@ class Feature_SheetRow:
         for crow in range(mysheet.nrownum):
             rowcelldict = {}
             for ccol in range(mysheet.ncolnum):
-                if mysheet.sheetdict.has_key((crow, ccol)):
+                #if mysheet.sheetdict.has_key((crow, ccol)):
+                if (crow, ccol) in mysheet.sheetdict.keys():
                     mycell = mysheet.sheetdict[(crow, ccol)]
                     rowcelldict[ccol] = mycell
 #                remove all the blank lines
             if len(rowcelldict) == 0:
                 continue
 #            crowname = self.get_rowname(filename, sheetname, crow)
-            if feadict.has_key(crow-1):
+            if crow-1 in feadict.keys():
                 blankflag = False
             else:
                 blankflag = True
@@ -120,17 +121,17 @@ class Feature_SheetRow:
         return False
 
     def feature_has_merge_cell(self, crow, mysheet):
-        if mysheet.mergerowdict.has_key(crow):
+        if crow in mysheet.mergerowdict.keys():
                 return True
         return False
         
     def feature_reach_right_bound(self, crow, rowcelldict, ncolnum):
-        if rowcelldict.has_key(ncolnum):
+        if ncolnum in rowcelldict.keys():
             return True
         return False
     
     def feature_reach_left_bound(self, rowcelldict):
-        if rowcelldict.has_key(0):
+        if 0 in rowcelldict.keys():
             return True
         return False
     
@@ -234,7 +235,7 @@ class Feature_SheetRow:
             cstr, mtype = mycell.cstr, mycell.mtype
             if mtype != 'str':
                 continue
-            if pattern.search(unicode(cstr)):
+            if pattern.search(str(cstr)):
                 count += 1
         if float(count)/len(rowcelldict) >= 0.6:
             return True
@@ -253,7 +254,8 @@ class Feature_SheetRow:
     
     
     def feature_contain_colon(self, clinetxt):
-        if string.find(clinetxt, ':') >=0 :
+        #if string.find(clinetxt, ':') >=0 :
+        if clinetxt.find(':') >=0 :
             return True
         return False
     

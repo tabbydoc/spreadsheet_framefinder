@@ -126,10 +126,10 @@ class MyCell():
     
         
     def print_info(self):
-        print self.cstr, self.mtype, self.indents
-        print 'bold', self.boldflag
-        print 'align', self.leftalign_flag, self.centeralign_flag, self.rightalign_flag
-        print 'border', self.bottomborder, self.upperborder, self.leftborder, self.rightborder
+        print (self.cstr, self.mtype, self.indents)
+        print ('bold', self.boldflag)
+        print ('align', self.leftalign_flag, self.centeralign_flag, self.rightalign_flag)
+        print ('border', self.bottomborder, self.upperborder, self.leftborder, self.rightborder)
 
     
 
@@ -168,7 +168,8 @@ class LoadSheets:
                             except:
                                 pass
                         else:
-                            cstr = unicode(curcell.value).replace('\n', ' ')
+                            cstr = str(curcell.value).replace('\n', ' ')
+                            #cstr = unicode(curcell.value).replace('\n', ' ')
                         
 #                         print cstr
                             
