@@ -49,9 +49,9 @@ class PredictSheetRows:
             feadict = self.fea_row.generate_singular_feature_crf(mysheet, filename, sheetname)
             
             outpath = _crffeadir + '/' + filename+'____'+sheetname
-            fout = open(outpath, 'w+')
+            fout = open(outpath, 'w+',  encoding="utf-8")
             for row, feavec in feadict.items():
-                fout.write(filename+'____'+sheetname.replace(' ', '__')+'____'+str(row)+' ')
+                fout.write("{0}____{1}____{2} ".format(filename, sheetname.replace(' ', '__'), row))
                 for item in feavec:
                     if item is True:
                         fout.write('1 ')
